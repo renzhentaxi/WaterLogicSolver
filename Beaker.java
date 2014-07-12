@@ -7,7 +7,7 @@ public class Beaker
 {
     public int currentVolume;
     public int maximumVolume;
-
+    public int precmd = -1;
     public Beaker(int paraMaximumVolume)
     {
         maximumVolume = paraMaximumVolume;
@@ -27,30 +27,64 @@ public class Beaker
 
     public boolean isFILLABLE(ArrayList<Beaker> beakers)
     {
-        boolean fillable = false;
-        if ( isEMPTY())
+        boolean fillable = isEMPTY();
+        if ( fillable)
         {
             ArrayList<Beaker> beakers2 = new ArrayList<Beaker>();
             beakers2.addAll(beakers);
             beakers2.remove(this);
-            for( Beaker b: beakers2)
+            if ( isALLFULL(beakers2))
             {
-                if (b.isFULL() == false)
-                {
-                    fillable = true;
-                }
+                fillable = false;
             }
+
         }
         return fillable;
     }
-    public boolean isEMPTYABLE()
+    public boolean isEMPTYABLE(ArrayList<Beaker> beakers)
     {
-        return  currentVolume != 0;
+        boolean emptyable = currentVolume != 0 && precmd != Path.FILL;
+        if(emptyable)
+        {
+            ArrayList<Beaker> beakers2 = new ArrayList<Beaker>();
+            beakers2.addAll(beakers);
+            beakers2.remove(this);
+            if( isALLEMPTY(beakers2))
+            {
+                emptyable = false;
+            }
+        }
+        return emptyable;
     }
 
     public boolean isSPLITTABLE()
     {
         return currentVolume % 2 == 0;
+    }
+    public static boolean isALLFULL(ArrayList<Beaker> beakers)
+    {
+        boolean result = true;
+        for (Beaker b: beakers)
+        {
+            if (!b.isFULL())
+            {
+                result = false;
+            }
+        }
+        return result;
+    }
+
+    public static boolean isALLEMPTY(ArrayList<Beaker> beakers)
+    {
+        boolean result = true;
+        for (Beaker b: beakers)
+        {
+            if(!b.isEMPTY())
+            {
+                result = false;
+            }
+        }
+        return result;
     }
 
     public boolean isFULL()
