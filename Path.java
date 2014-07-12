@@ -59,7 +59,7 @@ public class Path
             {
                 for(Beaker b: beakers)
                 {
-                    if (b.isEMPTYABLE())
+                    if (b.isEMPTYABLE(beakers))
                     {
                         Path newPath = new Path(this);
                         paths.add(newPath);
@@ -111,20 +111,23 @@ public class Path
         switch (cmd)
         {
             case FILL : newBeaker.currentVolume = newBeaker.maximumVolume;
-                        log += "FILL " + newBeaker +"\n";
-                        break;
+                log += "FILL " + newBeaker +"\n";
+                newBeaker.precmd = FILL;
+                break;
             case EMPTY: newBeaker.currentVolume = 0;
-                        log += "EMPTY " + newBeaker + "\n";
-                        break;
+                log += "EMPTY " + newBeaker + "\n";
+                newBeaker.precmd = EMPTY;
+                break;
             case SPLIT: newBeaker.currentVolume /= 2;
-                        log += "SPLIT " + newBeaker + "\n";
-                        break;
+                log += "SPLIT " + newBeaker + "\n";
+                break;
             case POUR : Beaker newBeaker2 = new Beaker(b2);
-                        int    index2     = beakers.indexOf(b2);
-                        beakers.set(index2,newBeaker2);
-                        newBeaker.pourInto(newBeaker2);
-                        log += "POUR " + newBeaker + "into " + newBeaker2 + "\n";
-                        break;
+                int    index2     = beakers.indexOf(b2);
+                beakers.set(index2,newBeaker2);
+                newBeaker.pourInto(newBeaker2);
+                log += "POUR " + newBeaker + "into " + newBeaker2 + "\n";
+                newBeaker.precmd = POUR;
+                break;
         }
     }
 
