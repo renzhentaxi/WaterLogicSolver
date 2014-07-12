@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by Tashi on 7/10/2014.
