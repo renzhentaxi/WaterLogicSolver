@@ -12,9 +12,9 @@ public class Main
 
     public static void demo()
     {
-        WaterLogicGame lv1 = new WaterLogicGame(9,2);
+        WaterLogicGame lv1 = new WaterLogicGame(7,9);
         lv1.setAvailableCommands(Path.FILL,Path.EMPTY,Path.POUR);
-        lv1.setGoal(6,3,9);
+        lv1.setGoal(6,5,9);
         Path p = lv1.solve();
         System.out.print(p);
     }
